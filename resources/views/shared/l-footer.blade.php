@@ -3,38 +3,35 @@
      <div class="auto-container">
          <!--Widgets Section-->
          <div class="widgets-section pb-0">
-             <div class="row clearfix  align-items-center"> <!-- Added align-items-center here -->
-
+             <div class="row clearfix align-items-center position-relative" style="z-index: 10;">
                  <!-- Copyright Column -->
                  <div class="copyright-column col-lg-4 col-md-6 col-sm-12">
                      <div class="footer-widget logo-widget">
                          <div class="logo">
-                             <a href="/"><img src="images/footer-logo.png" alt=""></a>
+                             <a href="/"><img src="{{ url('images/footer-logo.png') }}" alt=""></a>
                          </div>
                      </div>
                  </div>
 
-
-                 <div class="social-column col-lg-2 col-12">
-                    <a href="http://"  class="text-white">Terms of Use </a>
+                 <div class="col-lg-2 col-12">
+                     <a href="/terms" class="text-white">Terms of Use</a>
                  </div>
 
-                 <div class="social-column col-lg-2 col-12">
-                    <a href="http://"  class="text-white">Privacy & Cookie Policy </a>
+                 <div class="col-lg-2 col-12">
+                     <a href="/privacy" class="text-white">Privacy &amp; Cookie Policy</a>
                  </div>
 
-                 <div class="social-column col-lg-2 col-12">
-                    <a href="http://" class="text-white">Fraud Protection</a>
+                 <div class="col-lg-2 col-12">
+                     <a href="/fraud-protection" class="text-white">Fraud Protection</a>
                  </div>
 
-                 <div class="social-column col-lg-2 col-12">
-                    <a href="/security"  class="text-white">Security</a>
-                </div>
-
-
+                 <div class="col-lg-2 col-12">
+                     <a href="/security" class="text-white">Security</a>
+                 </div>
              </div>
 
          </div>
+
 
      </div>
      <!-- Footer Bottom -->
@@ -50,7 +47,7 @@
                  </div>
 
                  <!-- Social Column -->
-                 <div class="social-column col-lg-6 col-md-6 col-sm-12">
+                 <div class="social-column col-lg-6 col-md-6 col-sm-12 d-none">
                      <ul>
                          <li class="follow">Follow us: </li>
                          <li><a href="#"><span class="fa fa-facebook-square"></span></a></li>

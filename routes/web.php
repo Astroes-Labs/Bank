@@ -31,5 +31,37 @@ Route::get('/fraud-protection', function () {
     return view('fraud-protection');
 });
 
+Route::get('/privacy', function () {
+    return view('privacy');
+});
+
+Route::get('/terms', function () {
+    return view(view: 'terms');
+});
+
+Route::get('/contact', function () {
+    return view(view: 'contact');
+});
+
+Route::get('/faq', function () {
+    return view(view: 'faq');
+});
+
+Route::get('/insurance', function () {
+    return view(view: 'insurance');
+});
+
+Route::get('/lending', function () {
+    return view(view: 'lending');
+});
+
+Route::get('/deposits', function () {
+    return view(view: 'deposits');
+});
+
+Route::get('/accounts', function () {
+    return view(view: 'accounts');
+});
+
 
 

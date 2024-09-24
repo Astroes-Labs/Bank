@@ -793,7 +793,7 @@
                         </div>
                     </div>
                     <div class="pull-right">
-                        <a href="contact.html" class="theme-btn btn-style-five">Request now <span
+                        <a href="/contact" class="theme-btn btn-style-five">Request now <span
                                 class="icon fa fa-arrow-right"></span></a>
                     </div>
 

@@ -38,6 +38,7 @@
     <script src="{{ url('js/appear.js') }}"></script>
     <script src="{{ url('js/owl.js') }}"></script>
     <script src="{{ url('js/wow.js') }}"></script>
+    <script src="{{ url('js/validate.js') }}"></script>
     <script src="{{ url('js/jquery-ui.js') }}"></script>
     <script src="{{ url('js/main.js') }}"></script>
 
