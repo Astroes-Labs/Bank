@@ -49,7 +49,7 @@
 								</div>
 								<div class="title">Secured Business with</div>
 								<h2>{{ config('app.name') }}</h2>
-								<a href="/contact" class="theme-btn btn-style-seventen">Let’s start now <span class="icon flaticon-link"></span></a>
+								<a href="/register" class="theme-btn btn-style-seventen">Let’s start now <span class="icon flaticon-link"></span></a>
 							</div>
 						</div>
 

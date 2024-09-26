@@ -12,6 +12,8 @@
     <link href="{{ url('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url('css/style.css') }}" rel="stylesheet">
     <link href="{{ url('css/responsive.css') }}" rel="stylesheet">
+    <link href="{{ url('css/toastr.min.css') }}" rel="stylesheet">
+
 
     <link rel="shortcut icon" href="{{ url('images/favicon.png') }}" type="image/x-icon">
     <link rel="icon" href="{{ url('images/favicon.png') }}" type="image/x-icon">
@@ -41,6 +43,8 @@
     <script src="{{ url('js/validate.js') }}"></script>
     <script src="{{ url('js/jquery-ui.js') }}"></script>
     <script src="{{ url('js/main.js') }}"></script>
+    <script src="{{ url('js/toastr.min.js') }}"></script>
+    <script src="{{ url('js/login.js') }}"></script>
 
 
 </body>

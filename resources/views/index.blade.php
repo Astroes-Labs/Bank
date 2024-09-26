@@ -21,7 +21,7 @@
                                 bills, transfer funds, and check your balance with just a few taps.<br>
                                 Experience the convenience of banking whenever and wherever you need it!</div>
                             <div class="btn-box">
-                                <a href="contact.html" class="theme-btn btn-style-two">Let’s start now</a>
+                                <a href="/register" class="theme-btn btn-style-two">Let’s start now</a>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                                 bills and transfer money easily, all from the comfort of your home using online and mobile
                                 banking. Enjoy interest earnings with no monthly fees.</div>
                             <div class="btn-box">
-                                <a href="contact.html" class="theme-btn btn-style-two">Let’s start now</a>
+                                <a href="/register" class="theme-btn btn-style-two">Sign Up Now</a>
                             </div>
                         </div>
                     </div>
