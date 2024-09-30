@@ -2,6 +2,25 @@
 @section('content')
     <div class="page-wrapper">
 
+        <style>
+            .position-relative {
+                position: relative;
+            }
+
+            .toggle-password {
+                position: absolute;
+                right: 10px;
+                /* Adjust as needed for padding */
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #999;
+                /* Adjust color as needed */
+                padding: 0 10px;
+                /* Space around the icon */
+            }
+        </style>
+
         <!-- Preloader -->
         <div class="preloader"></div>
         @include('shared.l-header')
@@ -22,7 +41,7 @@
                                     <form method="post" action="{{ route('login') }}" id="loginForm">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="text" name="email" value="jacko@gmail.com" placeholder="Email"
+                                            <input type="text" name="email" value="test@gmail.com" placeholder="Email"
                                                 required>
 
                                             @error('email')
@@ -30,13 +49,12 @@
                                             @enderror
                                         </div>
 
-                                        <div class="form-group">
-                                            <input type="password" name="password" value="12341234" placeholder="Password"
-                                                required>
-
-                                                @error('password')
-                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
-                                                @enderror
+                                        <div class="form-group  position-relative">
+                                            <input type="password" name="password" placeholder="Password"
+                                                value="12341234" required id="password" class="form-control">
+                                            <span class="toggle-password" toggle="#password">
+                                                <i class="fa fa-eye"></i>
+                                            </span>
                                         </div>
 
 
@@ -48,7 +66,8 @@
 
                                     </form>
                                     <div class="mt-3">
-                                        <p>Don't have an account? <a href="{{ route('register') }}" class="text-primary">Register now</a></p>
+                                        <p>Don't have an account? <a href="{{ route('register') }}"
+                                                class="text-primary">Register now</a></p>
                                     </div>
                                 </div>
 

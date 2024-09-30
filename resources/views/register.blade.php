@@ -37,7 +37,7 @@
 
                                 <!-- Registration Form -->
                                 <div class="contact-form">
-                                    <form method="post" action="{{ route('register') }}" id="registrationForm"
+                                    {{-- <form method="post" action="{{ route('register') }}" id="registrationForm"
                                         enctype="multipart/form-data">
                                         @csrf
 
@@ -167,6 +167,151 @@
                                                 @enderror
                                             </div>
 
+
+                                            <div class="form-group">
+                                                <button type="submit" class="theme-btn register-btn">Register</button>
+                                            </div>
+                                        </div>
+                                    </form> --}}
+                                    <form method="post" action="{{ route('register') }}" id="registrationForm"
+                                        enctype="multipart/form-data">
+                                        @csrf
+
+                                        <!-- Step 1: Personal Information -->
+                                        <div id="step1">
+                                            <div class="form-group">
+                                                <input type="text" name="username" placeholder="Username"
+                                                    value="exampleUsername" required>
+                                                @error('username')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="email" name="email" placeholder="Email"
+                                                    value="example@example.com" required>
+                                                @error('email')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <select name="country" required>
+                                                    <option value="">Select Country</option>
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country['iso_3166_1_alpha3'] }}"
+                                                            {{ $country['iso_3166_1_alpha3'] == 'USA' ? 'selected' : '' }}>
+                                                            +{{ $country['calling_code'] }} ({{ $country['name'] }})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('country')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" name="mobile" class="form-control"
+                                                        placeholder="Mobile Number" value="1234567890" required>
+                                                </div>
+                                                @error('mobile')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group position-relative">
+                                                <input type="password" name="password" placeholder="Password"
+                                                    value="Password123" required id="password" class="form-control">
+                                                <span class="toggle-password" toggle="#password">
+                                                    <i class="fa fa-eye"></i>
+                                                </span>
+                                                @error('password')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group position-relative">
+                                                <input type="password" name="password_confirmation"
+                                                    placeholder="Confirm Password" value="Password123" required
+                                                    id="password_confirmation" class="form-control">
+                                                <span class="toggle-password" toggle="#password_confirmation">
+                                                    <i class="fa fa-eye"></i>
+                                                </span>
+                                                @error('password_confirmation')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <button type="button" class="next-btn theme-btn">Next</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Step 2: Account Information -->
+                                        <div id="step2" style="display: none;">
+                                            <div class="form-group">
+                                                <i class="fa fa-arrow-left prev-btn text-primary"> Back</i>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="first_name" placeholder="First Name"
+                                                    value="John" required>
+                                                @error('first_name')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="last_name" placeholder="Last Name"
+                                                    value="Doe" required>
+                                                @error('last_name')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <!-- Image Placeholder -->
+                                                <div class="image-placeholder mb-2">
+                                                    <img id="profileImage" src="{{ url('images/profile-icon.png') }}" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+                                                </div>
+                                                <input type="file" name="image" id="imageUpload" placeholder="Selfie" required>
+                                                @error('image')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="address" placeholder="Address"
+                                                    value="123 Main St" required>
+                                                @error('address')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="state" placeholder="State" value="California"
+                                                    required>
+                                                @error('state')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="city" placeholder="City"
+                                                    value="Los Angeles" required>
+                                                @error('city')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="zipcode" placeholder="Zipcode"
+                                                    value="90001" required>
+                                                @error('zipcode')
+                                                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
                                             <div class="form-group">
                                                 <button type="submit" class="theme-btn register-btn">Register</button>

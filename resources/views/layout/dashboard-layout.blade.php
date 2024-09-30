@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="digibank,digital banking
+    <meta name="keywords" content="{{ config('app.name') }},digital banking
 ">
-    <meta name="description" content="Digi Bank is a fully online banking system.
+    <meta name="description" content="{{ config('app.name') }} is a fully online banking system.
 ">
-    <meta name="csrf-token" content="WrPokxZitOr0cofSvoM5hSB8OBCL66afu9XLmNGO">
     <link rel="canonical" href="index.htm">
+    {{-- change the shortcut icon and icon --}}
     <link rel="shortcut icon" href="{{ url('assets/global/images/SlBP02BCpepDoEeCM5jr.png') }}" type="image/x-icon">
     <link rel="icon" href="{{ url('assets/global/images/SlBP02BCpepDoEeCM5jr.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url('assets/front/css/bootstrap.min.css') }}">
@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ url('assets/front/css/aos.css') }}">
     <link rel="stylesheet" href="{{ url('assets/front/css/swiper.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/front/css/styles.css?v=1.3') }}">
+    <link href="{{ url('css/toastr.min.css') }}" rel="stylesheet">
+    @yield('extraCss')
 
     <style>
         //The Custom CSS will be added on the site head tag
@@ -31,17 +33,13 @@
             padding: 0;
         }
     </style>
-    <title>Digi Bank - Home
+    <title> {{ config('app.name') }} - Dashboard
     </title>
-
-    @if (auth()->check() && Route::currentRouteName() === 'dashboard')
-        Hello Browser
-    @endif
 </head>
 
-<body class="body-landing-bg">
+<body class="">
 
-    @include('layout.l-preloader')
+    {{-- @include('layout.l-preloader') --}}
     @yield('content')
     <script src="{{ url('assets/global/js/jquery.min.js') }}"></script>
     <script src="{{ url('assets/global/js/jquery-migrate.js') }}"></script>
@@ -60,8 +58,16 @@
     <script src="{{ url('assets/front/js/meanmenu.min.js') }}"></script>
     <script src="{{ url('assets/front/js/aos.js') }}"></script>
     <script src="{{ url('assets/global/js/lucide.min.js') }}"></script>
-    <script src="{{ url('assets/global/js/color-changer.js') }}"></script>
-    <script src="{{ url('assets/front/js/landing.js?v1.0') }}"></script>
+    <script src="{{ url('assets/global/js/pusher.min.js') }}"></script>
+    <script src="{{ url('assets/global/js/dashboard.js') }}"></script>
+    <script src="{{ url('js/toastr.min.js') }}"></script>
+    @yield('extraJs')
+
+    {{-- @if (auth()->check() && Route::currentRouteName() === 'user.dashboard')
+
+    @endif --}}
+
+
 
 
 </body>

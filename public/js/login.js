@@ -9,6 +9,7 @@ $(document).ready(function () {
                 //$('#responseMessage').html('<p>' + response.message + '</p>');
                 if (response.success === true) {
                     toastr.success(response.message);
+                    window.location.href = '/user/dashboard';
                 } else {
                     toastr.error(response.message);
                 }
@@ -38,7 +39,7 @@ $(document).ready(function () {
                 // Display success message
                 toastr.success(response.message);
                 // Optionally, redirect or clear the form
-                // window.location.href = '/somewhere';
+                window.location.href = '/login';
             },
             error: function(xhr) {
                 if (xhr.status === 422) {
@@ -54,6 +55,7 @@ $(document).ready(function () {
             }
         });
     });
+
 });
 
 //Next Button functionality on Register
@@ -188,4 +190,17 @@ $(document).ready(function() {
         $('#step1').show();
         $('#step2').hide();
     });
+
+    $('#imageUpload').change(function(event) {
+        const input = event.target;
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $('#profileImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
 });
+
+
