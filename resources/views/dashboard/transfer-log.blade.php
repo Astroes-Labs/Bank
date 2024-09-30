@@ -17,7 +17,9 @@
 @endsection
 
 <div class="site-card-header">
-    <div class="title-small">{{ request()->routeIs('user.transfer-log') || request()->routeIs('user.transfers-search') ? 'Transfer History' : 'Transactions' }}</div>
+    <div class="title-small">
+        {{ request()->routeIs('user.transfer-log') || request()->routeIs('user.transfers-search') ? 'Transfer History' : 'Transactions' }}
+    </div>
     <div class="card-header-links">
         <a href="{{ route('user.transfers') }}" class="card-header-link"><svg xmlns="http://www.w3.org/2000/svg"
                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -37,12 +39,13 @@
                 </div>
                 <div class="single-f-box">
                     <label for="daterange">Date</label>
-                    <input type="text" name="daterange" value="{{ request('daterange') }}" autocomplete="off" id="daterange">
+                    <input type="text" name="daterange" value="{{ request('daterange') }}" autocomplete="off"
+                        id="daterange">
                 </div>
                 <button class="apply-btn me-2" name="filter">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round" data-lucide="filter" class="lucide lucide-filter">
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" data-lucide="filter" class="lucide lucide-filter">
                         <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                     </svg> Filter
                 </button>
@@ -108,14 +111,15 @@
                 </div>
             </div> --}}
             @foreach ($transfers as $transfer)
-            <div class="site-table-list">
-            <div class="site-table-col">
+                <div class="site-table-list">
+                    <div class="site-table-col">
                         <div class="description">
                             <div class="event-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="send" class="lucide lucide-send">
-                                    <path d="m22 2-7 20-4-9-9-4Z"></path>
-                                    <path d="M22 2 11 13"></path>
-                                </svg>
+                                @if ($transfer->type === 'CR')
+                                    <i data-lucide="chevrons-down"></i>
+                                @else
+                                    <i data-lucide="send"></i>
+                                @endif
                             </div>
                             <div class="content">
                                 <div class="title">
@@ -123,7 +127,7 @@
                                 </div>
                                 <div class="date">{{ $transfer->created_at->format('d M Y h:i A') }}</div>
                                 <div class="text-muted">
-                                     {{ $transfer->purpose ?? "" }}
+                                    {{ $transfer->purpose ?? '' }}
                                 </div>
                             </div>
                         </div>
@@ -137,7 +141,8 @@
                         </div>
                     </div>
                     <div class="site-table-col">
-                        <div class="type site-badge badge-{{ strtolower($transfer->status) }}">{{ ucfirst($transfer->status) }}</div>
+                        <div class="type site-badge badge-{{ strtolower($transfer->status) }}">
+                            {{ ucfirst($transfer->status) }}</div>
                     </div>
                     <div class="site-table-col">
                         <div class="fw-bold">
@@ -145,12 +150,12 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
+            @endforeach
 
-<!-- Add pagination links -->
-<div class="pagination mb-2 ms-5">
-    {{ $transfers->links() }}
-</div>
+            <!-- Add pagination links -->
+            <div class="pagination mb-2 ms-5">
+                {{ $transfers->links() }}
+            </div>
 
 
         </div>

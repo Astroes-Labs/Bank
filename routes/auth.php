@@ -50,9 +50,14 @@ Route::group(['prefix' => 'user/', 'as' => 'user.'], function () {
 
         Route::get('/support', [DashboardController::class, 'show'])->name('support');
 
-        Route::get('/settings', [DashboardController::class, 'show'])->name('settings');
+        Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
 
-        Route::get('/change-password', [DashboardController::class, 'show'])->name('change-password');
+        Route::post('/profile-update', [DashboardController::class, 'update'])->name('profile-update');
+
+        Route::get('/change-password', [DashboardController::class, 'changePassword'])->name('change-password');
+
+        Route::post('/update-password', [DashboardController::class, 'updatePassword'])->name('update-password');
+
 
         // Route::put('/{idea}', [IdeaController::class, 'update'])->name('update');
 

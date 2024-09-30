@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Transfer;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+
 
 class DashboardController extends Controller
 {
@@ -17,10 +20,102 @@ class DashboardController extends Controller
 
         // Calculate the greeting
         $greeting = $this->getGreeting($user);
+        $transfers = Transfer::where('user_id', auth()->id())
+            ->latest() // Order by the latest
+            ->take(5) // Limit to the latest 5 records
+            ->get();
+
 
         // Pass the user and greeting to the view
-        return view('dashboard.dashboard', compact('user', 'greeting'));
+        return view('dashboard.dashboard', compact('user', 'greeting', 'transfers'));
     }
+    public function settings()
+    {
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        // Calculate the greeting
+        $greeting = $this->getGreeting($user);
+
+
+        // Pass the user and greeting to the view
+        return view('dashboard.settings', compact('user', 'greeting'));
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'mobile' => 'required|string|max:15',
+            'image' => 'nullable|image|mimes:jpg,png,gif|max:2048',
+            'address' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'zipcode' => 'required|string|max:10',
+        ]);
+
+        $user = auth()->user();
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->country = $request->country;
+        $user->mobile = $request->mobile;
+        $user->address = $request->address;
+        $user->state = $request->state;
+        $user->city = $request->city;
+        $user->zipcode = $request->zipcode;
+
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($user->image) {
+                Storage::disk('public')->delete($user->image);
+            }
+
+            // Store the new image
+            $path = $request->file('image')->store('avatars', 'public');
+            $user->image = $path;
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function changePassword(Request $request)
+    {
+       // Get the currently authenticated user
+       $user = Auth::user();
+
+       // Calculate the greeting
+       $greeting = $this->getGreeting($user);
+
+
+       // Pass the user and greeting to the view
+       return view('dashboard.change-password', compact('user', 'greeting'));
+    }
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = auth()->user();
+
+        // Check if the current password is correct
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json(['errors' => ['current_password' => ['The current password is incorrect.']]], 422);
+        }
+
+        // Update the password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['success' => 'Password changed successfully!']);
+    }
+
+
 
     public function transfers()
     {
@@ -48,7 +143,7 @@ class DashboardController extends Controller
             ->where('type', 'DR') // Add this line to filter by type
             ->latest()
             ->paginate(10);
-            $log = true;
+        $log = true;
 
         return view('dashboard.transfers', compact('user', 'greeting', 'transfers', 'log'));
     }
@@ -59,13 +154,12 @@ class DashboardController extends Controller
 
         // Use paginate to get a limited number of records per page (e.g., 10)
         $transfers = Transfer::where('user_id', auth()->id())
-            ->where('type') // Add this line to filter by type
             ->latest()
             ->paginate(10);
-            $log = true;
-
+        $log = true;
         return view('dashboard.transfers', compact('user', 'greeting', 'transfers', 'log'));
-    }public function transfersSearch(Request $request)
+    }
+    public function transfersSearch(Request $request)
     {
         $user = Auth::user();
         $greeting = $this->getGreeting($user);
@@ -76,14 +170,14 @@ class DashboardController extends Controller
 
         // Start the query with user_id and type filters
         $transfers = Transfer::where('user_id', $user->id)
-                             ->where('type', 'DR');
+            ->where('type', 'DR');
 
         // Filter by description against specific fields
         if ($description) {
             $transfers->where(function ($query) use ($description) {
                 $query->where('purpose', 'like', "%{$description}%")
-                      ->orWhere('name_of_account', 'like', "%{$description}%")
-                      ->orWhere('bank_name', 'like', "%{$description}%");
+                    ->orWhere('name_of_account', 'like', "%{$description}%")
+                    ->orWhere('bank_name', 'like', "%{$description}%");
             });
         }
 

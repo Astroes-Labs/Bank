@@ -32,6 +32,9 @@ $(document).ready(function () {
 
     // Set active link for transfer buttons
     setActiveLink('.transfer-top-btns a');
+
+
+    setActiveLink('.settings-menu-nav a');
 });
 
 
@@ -129,8 +132,8 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function() {
-    $('#transferForm').on('submit', function(event) {
+$(document).ready(function () {
+    $('#transferForm').on('submit', function (event) {
         event.preventDefault(); // Prevent default form submission
 
         // Clear any previous toastr messages
@@ -180,7 +183,7 @@ $(document).ready(function() {
                 url: $(this).attr('action'), // Use the form's action URL
                 type: 'POST',
                 data: $(this).serialize(), // Serialize form data
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         toastr.success(response.message);
                         // Optionally reset the form
@@ -189,7 +192,7 @@ $(document).ready(function() {
 
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     // Handle validation errors
                     var errors = xhr.responseJSON.errors;
                     for (var key in errors) {
@@ -201,4 +204,93 @@ $(document).ready(function() {
     });
 });
 
+
+$(document).ready(function () {
+    $('#profileForm').on('submit', function (e) {
+        // Prevent the default form submission
+        e.preventDefault();
+
+        // Validate required fields
+        let valid = true;
+        $('.box-input').each(function () {
+            if ($(this).prop('required') && !$(this).val()) {
+                valid = false;
+                $(this).addClass('is-invalid'); // Add a class for styling
+            } else {
+                $(this).removeClass('is-invalid'); // Remove class if valid
+            }
+        });
+
+        if (!valid) {
+            toastr.error('Please fill in all required fields.');
+            return; // Stop form submission
+        }
+
+        // Submit the form via AJAX if everything is valid
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: new FormData(this),
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                // Handle success response
+                toastr.success('Profile updated successfully!');
+                // Optionally redirect or update UI
+                setTimeout(() => {
+
+                    window.location.reload();
+                }, 2000);
+
+            },
+            error: function (xhr) {
+                // Handle error response
+                toastr.error('An error occurred while updating the profile. Please try again.');
+            }
+        });
+    });
+});
+
+
+$(document).ready(function () {
+    // Toggle password visibility
+    $('.toggle-password').on('click', function () {
+        const targetInput = $(this).data('target');
+        const input = $(targetInput);
+
+        if (input.attr('type') === 'password') {
+            input.attr('type', 'text');
+            $(this).html('<i class="fas fa-eye-slash"></i>'); // Change icon to eye-slash
+        } else {
+            input.attr('type', 'password');
+            $(this).html('<i class="fas fa-eye"></i>'); // Change icon back to eye
+        }
+    });
+
+    $('#changePasswordForm').on('submit', function (e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        // Submit the form via AJAX
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: $(this).serialize(), // Serialize form data
+            success: function (response) {
+                toastr.success('Password changed successfully!');
+                $('#changePasswordForm')[0].reset();
+            },
+            error: function (xhr) {
+                // Check for validation errors
+                if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+                    for (const key in errors) {
+                        toastr.error(errors[key][0]);
+                    }
+                } else {
+                    toastr.error('An error occurred. Please try again.');
+                }
+            }
+        });
+    });
+});
 
