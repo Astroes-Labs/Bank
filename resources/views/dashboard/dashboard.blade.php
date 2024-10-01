@@ -28,7 +28,7 @@
                                     <h4 class="title">Current Account Balance</h4>
 
                                     <h3 class="acc-balance" id="passo">
-                                        $4.10
+                                        {{ $user->currency }} {{ $user->balance }}
                                     </h3>
 
                                     <div class="acc-num">A/C:
